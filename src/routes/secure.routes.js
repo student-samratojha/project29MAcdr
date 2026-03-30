@@ -1,0 +1,11 @@
+const router = require("express").Router();
+const secureController = require("../controllers/secure.controller");
+const { verifyToken, isAdmin } = require("../middleware/auth.middleware");
+router.get("/admin", verifyToken, isAdmin, secureController.adminPage);
+router.get("/adminProfile",verifyToken,isAdmin,secureController.adminProfile);
+router.get("/user", verifyToken, secureController.userPage);
+router.post("/delete", verifyToken, isAdmin, secureController.deleteAccount);
+router.post("/restore", verifyToken, isAdmin, secureController.restoreAccount);
+router.get("/edit/:id", verifyToken, secureController.editAccount);
+router.post("/edit/:id", verifyToken, secureController.updateAccount);
+module.exports = router;

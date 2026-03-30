@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Project29M</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 min-h-screen">
+    <!-- Nav (Same Branding as Admin/Index) -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-blue-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <span class="text-slate-900 font-bold text-xl tracking-tight">Project29M</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="/post/all" class="text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-widest">Feed</a>
+                    <a href="/post/create" class="text-xs font-bold text-blue-600 hover:text-blue-700 uppercase tracking-widest">New Post</a>
+                    <div class="h-px w-6 bg-slate-200 rotate-90 hidden sm:block"></div>
+                    <a href="/auth/logout" class="text-xs font-bold text-red-500 hover:text-red-600 transition-colors uppercase tracking-widest">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Welcome Hero -->
+        <div class="mb-10">
+            <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">User <span class="text-blue-600">Dashboard</span></h1>
+            <p class="text-lg text-slate-500">Manage your profile and review your recent contributions.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Profile Card -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden sticky top-24">
+                    <div class="h-32 bg-gradient-to-r from-blue-600 to-blue-400"></div>
+                    <div class="px-6 pb-6">
+                        <div class="relative -top-12 mb-[-3rem]">
+                            <img src="<%= user.profilePic || 'https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg' %>" 
+                                 class="h-24 w-24 rounded-2xl border-4 border-white object-cover shadow-md bg-white">
+                        </div>
+                        <div class="mt-4">
+                            <h2 class="text-2xl font-bold text-slate-900"><%= user.name %></h2>
+                            <p class="text-sm font-medium text-slate-500 mb-4"><%= user.email %></p>
+                            
+                            <div class="py-4 border-t border-slate-100">
+                                <p class="text-sm text-slate-600 leading-relaxed italic">"<%= user.bio || 'Professional user on Project29M' %>"</p>
+                            </div>
+
+                            <div class="space-y-3 pt-4">
+                                <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+                                    <span>Account Status</span>
+                                    <span class="text-emerald-500">Active</span>
+                                </div>
+                                <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+                                    <span>Total Posts</span>
+                                    <span class="text-slate-900"><%= posts.length %></span>
+                                </div>
+                            </div>
+
+                            <a href="/secure/edit/<%= user._id %>" class="mt-6 block w-full py-3 bg-white text-blue-600 border border-blue-100 text-center font-bold text-xs rounded-xl hover:bg-blue-50 transition-all shadow-sm shadow-blue-50 uppercase tracking-widest">
+                                Edit Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Section (Data from Controller) -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Recent Posts -->
+                <section>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-slate-900">Your Recent Posts</h3>
+                        <a href="/posts/create" class="text-xs font-bold text-blue-600 hover:underline">NEW POST +</a>
+                    </div>
+                    <div class="grid gap-4">
+                        <% if (posts && posts.length > 0) { %>
+                            <% posts.slice(0, 3).forEach(post => { %>
+                                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                                    <h4 class="font-bold text-slate-900 mb-1"><%= post.title %></h4>
+                                    <p class="text-sm text-slate-500 line-clamp-2 mb-3"><%= post.content %></p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter"><%= new Date(post.createdAt).toLocaleDateString() %></span>
+                                        <div class="flex gap-2">
+                                            <button class="text-[10px] font-bold text-slate-400 hover:text-blue-600">VIEW</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <div class="bg-white p-8 rounded-xl border border-dashed border-slate-300 text-center">
+                                <p class="text-slate-400 text-sm">You haven't shared any insights yet.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </section>
+
+                <!-- Security Status / Comments Summary -->
+                <section class="bg-blue-600 rounded-2xl p-8 text-white shadow-lg shadow-blue-200">
+                    <div class="flex items-start justify-between mb-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-1">Encrypted Session Active</h3>
+                            <p class="text-blue-100 text-sm">Your data is secured with AES-256 equivalent standards.</p>
+                        </div>
+                        <div class="h-12 w-12 bg-white/10 rounded-xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04kM12 21.75c-2.67 0-5.14-.95-7.07-2.54A11.95 11.95 0 0112 12.75c2.67 0 5.14.95 7.07 2.54A11.95 11.95 0 0112 21.75z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <span class="block text-blue-200 text-[10px] font-bold uppercase mb-1">Total Comments</span>
+                            <span class="text-2xl font-bold"><%= comments.length %></span>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <span class="block text-blue-200 text-[10px] font-bold uppercase mb-1">Role Tier</span>
+                            <span class="text-2xl font-bold uppercase tracking-tight">Verified</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
+        &copy; 2024 Project29M &bull; Secure User Environment
+    </footer>
+  </body>
+</html>

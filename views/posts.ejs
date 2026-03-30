@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Feed | Project29M</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <!-- Navigation (Admin/User page jaisa) -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-blue-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                    </div>
+                    <span class="text-slate-900 font-bold text-xl tracking-tight">Project29M</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <%if (user.role === 'user') { %>
+                   <a href="/post/create" class="text-sm font-bold text-blue-600 hover:text-blue-700">NEW POST</a>
+                  <%} else{%>
+                   <span class="text-base font-semibold text-zinc-700">Welcome Admin</span>
+<%}%>
+                    <div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300">
+                       <a href="/secure/<%=user.role%>"><img src="<%= user.profilePic || 'https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg' %>" alt="Profile" class="h-full w-full object-cover">
+                       </a></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 py-10">
+        <!-- Header Section -->
+        <div class="mb-12 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-3">
+                Community <span class="text-blue-600">Feed</span>
+            </h1>
+            <p class="text-lg text-slate-500 font-medium">Explore the latest insights from the network.</p>
+        </div>
+
+        <!-- Posts Loop -->
+        <div class="space-y-8">
+            <% if (posts && posts.length > 0) { %>
+                <% posts.forEach(post => { %>
+                    <article class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-hover hover:shadow-md">
+                        <div class="p-6">
+                            <!-- Author Info -->
+                            <div class="flex items-center gap-3 mb-5">
+                                <div class="h-10 w-10 rounded-xl bg-slate-100 overflow-hidden">
+                                    <img src="<%= post.author.profilePic || 'https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg' %>" class="h-full w-full object-cover">
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-slate-900"><%= post.author.name %></p>
+                                    <p class="text-xs text-slate-400 font-medium"><%= new Date(post.createdAt).toLocaleDateString() %></p>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <h2 class="text-xl font-bold text-slate-900 mb-3"><%= post.title %></h2>
+                            <p class="text-slate-600 leading-relaxed mb-6">
+                                <%= post.content %>
+                            </p>
+
+                            <!-- Actions (Controller routes ke hisab se) -->
+                            <div class="flex items-center justify-between pt-5 border-t border-slate-50">
+                                <div class="flex gap-4">
+                                    <form action="/post/like" method="POST">
+                                        <input type="hidden" name="postId" value="<%= post._id %>">
+                                        <button type="submit" class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-blue-600 transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                            </svg>
+                                            LIKE
+                                        </button>
+                                    </form>
+                                    <a href="/post/all" class="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-blue-600 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                        </svg>
+                                        COMMENT
+                                    </a>
+                                </div>
+                                
+                                <% if (user.role === 'admin' || user._id.toString() === post.author._id.toString()) { %>
+                                    <form action="/post/delete" method="POST">
+                                        <input type="hidden" name="id" value="<%= post._id %>">
+                                        <button type="submit" class="text-xs font-bold text-red-400 hover:text-red-600 transition-colors uppercase tracking-wider">Delete</button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        </div>
+                    </article>
+                <% }) %>
+            <% } else { %>
+                <div class="text-center py-20 bg-white rounded-2xl border border-dashed border-slate-300">
+                    <p class="text-slate-400 font-medium text-lg">No posts found in the network yet.</p>
+                  <%if (user.role === 'user') { %>  <a href="/post/create" class="inline-block mt-4 text-blue-600 font-bold hover:underline">Be the first to post</a><%}%>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center">
+        <p class="text-xs font-bold text-slate-300 uppercase tracking-widest">&copy; 2024 Project29M &bull; Encrypted Session</p>
+    </footer>
+</body>
+</html>

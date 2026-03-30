@@ -1,0 +1,10 @@
+const router = require("express").Router();
+const postController = require("../controllers/post.controller");
+const { verifyToken } = require("../middleware/auth.middleware");
+router.get("/create", verifyToken, postController.createPost);
+router.get("/all", verifyToken, postController.getPosts);
+router.post("/create", verifyToken, postController.postCreatePost);
+router.post("/delete", verifyToken, postController.deletePost);
+router.post("/like", verifyToken, postController.toggleLike);
+router.post("/comment", verifyToken, postController.commentOnPost);
+module.exports = router;

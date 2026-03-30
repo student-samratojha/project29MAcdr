@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Post | Project29M</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="max-w-md w-full">
+        <!-- Header Section (Register Page Jaisa) -->
+        <div class="mb-8 text-center">
+            <div class="inline-flex h-16 w-16 bg-blue-600 rounded-2xl items-center justify-center shadow-lg shadow-blue-200 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+            </div>
+            <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">
+                Create <span class="text-blue-600">New Post</span>
+            </h1>
+            <p class="text-slate-500 font-medium leading-relaxed">
+                Publish your insights to the secure community network.
+            </p>
+        </div>
+
+        <!-- Post Form Card -->
+        <div class="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200 border border-slate-100">
+            <form action="/posts/create" method="POST" class="space-y-6">
+                <!-- Title Field -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Post Title</label>
+                    <input type="text" name="title" required placeholder="Enter a descriptive title" 
+                        class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-all placeholder:text-slate-300 font-medium">
+                </div>
+<div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Post Image</label>
+                    <input type="text" name="image" placeholder="Enter image URL" 
+                        class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-all placeholder:text-slate-300 font-medium">
+                </div>
+                <!-- Content Field -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Post Content</label>
+                    <textarea name="content" rows="6" required placeholder="Write your post here..." 
+                        class="w-full px-4 py-3.5 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition-all placeholder:text-slate-300 font-medium resize-none"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button type="submit" class="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 active:scale-[0.98]">
+                        PUBLISH POST
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Secondary Action -->
+            <div class="mt-6 text-center">
+                <a href="/secure/user" class="text-sm font-semibold text-slate-400 hover:text-blue-600 transition-colors">
+                    Discard and return to profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-16 text-slate-400 text-xs font-medium uppercase tracking-widest">
+        &copy; 2024 Project29M &bull; Encrypted Session
+    </footer>
+</body>
+</html>

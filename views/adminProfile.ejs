@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile | Project29M</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-blue-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <span class="text-slate-900 font-bold text-xl tracking-tight">Project29M</span>
+                    <span class="ml-4 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 uppercase tracking-wider">Root Admin</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="/post/all" class="text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-widest">Global Feed</a>
+                    <a href="/secure/admin" class="text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-widest">Dashboard</a>
+                    <div class="h-px w-6 bg-slate-200 rotate-90 hidden sm:block"></div>
+                    <a href="/auth/logout" class="text-xs font-bold text-red-500 hover:text-red-600 transition-colors uppercase tracking-widest">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <!-- Admin Hero Card -->
+        <div class="bg-white rounded-3xl shadow-xl shadow-slate-200 border border-slate-100 overflow-hidden">
+            <!-- Banner Gradient -->
+            <div class="h-48 bg-gradient-to-r from-slate-900 via-blue-900 to-blue-600 flex items-end justify-end p-8">
+                <div class="text-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04kM12 21.75c-2.67 0-5.14-.95-7.07-2.54A11.95 11.95 0 0112 12.75c2.67 0 5.14.95 7.07 2.54A11.95 11.95 0 0112 21.75z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="px-8 pb-10 relative">
+                <!-- Profile Image -->
+                <div class="relative -top-16 mb-[-3rem] inline-block">
+                    <img src="<%= admin.profilePic || 'https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg' %>" 
+                         class="h-32 w-32 rounded-3xl border-8 border-white object-cover shadow-lg bg-white">
+                    <div class="absolute bottom-2 -right-2 h-8 w-8 bg-emerald-500 border-4 border-white rounded-full title='System Online'"></div>
+                </div>
+
+                <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight"><%= admin.name %></h1>
+                        <p class="text-blue-600 font-bold text-sm uppercase tracking-widest mt-1">System Administrator</p>
+                    </div>
+                    <a href="/secure/edit/<%= admin._id %>" class="px-6 py-3 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 uppercase tracking-widest text-center">
+                        Modify Credentials
+                    </a>
+                </div>
+
+                <!-- Detailed Info Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 pt-10 border-t border-slate-100">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Secure Email</label>
+                            <p class="text-slate-900 font-semibold"><%= admin.email %></p>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Administrative Bio</label>
+                            <p class="text-slate-600 leading-relaxed font-medium"><%= admin.bio || 'Authorized system administrator for Project29M network.' %></p>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Primary Location</label>
+                            <p class="text-slate-900 font-semibold"><%= admin.city || 'Undisclosed' %>, <%= admin.country || 'Global' %></p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                            <p class="text-blue-700 text-xs font-bold mb-1 uppercase tracking-tighter">Access Level</p>
+                            <p class="text-blue-900 text-sm font-extrabold uppercase">TIER 1 - FULL PERMISSIONS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">
+        &copy; 2024 Project29M &bull; Encrypted Session Administration
+    </footer>
+</body>
+</html>
